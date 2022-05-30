@@ -96,9 +96,10 @@ public class ProdutoController {
 			@RequestParam("quantidade") Integer quantidade, @RequestParam("comprador") String comprador) throws Exception {
 		System.out.println("Processando listarProduto");
 		Compra produtoComprado =  produtoService.realizarCompra(idProduto, quantidade, comprador);
-		if (produtoComprado.idCompra == null) {
+		if (produtoComprado.idCompra == null) {			
 			return new ResponseEntity<Compra>(produtoComprado, HttpStatus.BAD_REQUEST);
 		} else
+			estoqueDados.atualizaEstoque(idProduto, quantidade);
 			return new ResponseEntity<Compra>(produtoComprado, HttpStatus.OK);
 	}
 
