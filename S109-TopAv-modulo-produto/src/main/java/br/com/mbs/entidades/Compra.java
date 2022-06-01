@@ -8,7 +8,7 @@ public class Compra {
 		public Produto produtoComprado;
 		public Integer unidadesCompradas;
 		public String comprador;
-		public String dataCompra = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		public String dataCompra = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 		@Override
 		public String toString() {
 			return "\nCompra ID " + idCompra +

@@ -1,6 +1,8 @@
 package br.com.mbs.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ws.rs.core.MediaType;
 
@@ -63,6 +65,7 @@ public class ProdutoController {
 	public ResponseEntity<Integer> cadastrarProdutoJson(@RequestBody Produto produto) throws Exception {
 		System.out.println("Executando controller/cadastrarProdutoJson/");
 		int retorno = 0;
+		produto.dataCadastro = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
 		retorno = produtoService.inserirProduto(produto);
 		if (retorno == 400) {
 			System.out.println("Retorno de controller/cadastrarProdutoJson/ " + retorno);
@@ -72,6 +75,7 @@ public class ProdutoController {
 			return new ResponseEntity<>(retorno, HttpStatus.CONFLICT);
 		} else
 			System.out.println("Retorno de controller/cadastrarProdutoJson/ " + retorno);
+		estoqueDados.atualizaEstoque(produto.idProduto, produto.quantidadeProduto);
 		return new ResponseEntity<>(retorno, HttpStatus.CREATED);
 	}
 
