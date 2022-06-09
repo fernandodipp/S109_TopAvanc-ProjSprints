@@ -16,10 +16,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-public class SwaggerConfig  {                                    
+public class SwaggerConfig  {
     @Bean
-    public Docket api() { 
-     
+    public Docket api() {
+
     	Docket docket =  new Docket(DocumentationType.SWAGGER_2)
         .select()
         .apis(RequestHandlerSelectors.basePackage("br.com.mbs.controller"))
@@ -27,20 +27,20 @@ public class SwaggerConfig  {
         .build()
         .useDefaultResponseMessages(false)
         .apiInfo(apiInfo());
-        
-        
+
+
         return docket;
     }
-    
+
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Exemplo de API REST")
                 .description("Este e um projeto exemplo, desenvolvido para ser utilizado "
                 		+ "em minhas aulas de programacao")
-                .version("1.0.0")                
+                .version("1.0.0")
                 .contact(new Contact("Marcelo Soares", "", "mbsoares.infor@gmail.com"))
                 .build();
     }
-    
-   
+
+
 }

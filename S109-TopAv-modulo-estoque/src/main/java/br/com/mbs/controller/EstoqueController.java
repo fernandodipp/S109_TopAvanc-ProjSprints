@@ -13,7 +13,7 @@ import io.swagger.annotations.Api;
 
 @RestController(value = "API para manipulacao de estoque")
 @RequestMapping("estoque")
-@Api(description = "Api de estoque - Sprint Atual = 2 incompleta")
+@Api(description = "Api de estoque - Sprint Atual = 3 completa")
 public class EstoqueController {
 
 	EstoqueService estoqueService = new EstoqueService();

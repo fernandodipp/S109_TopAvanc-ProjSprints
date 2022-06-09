@@ -6,6 +6,14 @@ import java.util.Date;
 
 import javax.ws.rs.core.MediaType;
 
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.JobParameters;
+import org.springframework.batch.core.JobParametersBuilder;
+import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,27 +24,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.mbs.dados.EstoqueDados;
 import br.com.mbs.entidades.Compra;
 import br.com.mbs.entidades.Produto;
 import br.com.mbs.service.ProdutoService;
-import br.com.mbs.dados.EstoqueDados;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController(value = "API para manipulacao de produtos")
 @RequestMapping("produto")
-@Api(description = "Api de produtos - Sprint Atual = 3 imcompleta")
+@Api(description = "Api de produtos - Sprint Atual = 4 incompleta")
 public class ProdutoController {
-	
+
+	@Autowired
+	private JobLauncher jobLauncher;
+
+	@Autowired
+	private Job processJob;
+
 	@Autowired
 	private EstoqueDados estoqueDados;
-	
-	ProdutoService produtoService = new ProdutoService();
+
+	@Autowired
+	private ProdutoService produtoService;
 
 	@RequestMapping(value = "/cadastrarProduto/", method = RequestMethod.POST)
 	public ResponseEntity<Produto> cadastrarProduto(
 			@RequestParam("marcaProduto") String marcaProduto,
-			@RequestParam("modeloProduto") String modeloProduto, 
+			@RequestParam("modeloProduto") String modeloProduto,
 			@RequestParam("precoProduto") float precoProduto,
 			@RequestParam("quantidadeProduto") Integer quantidadeProduto) throws Exception {
 		System.out.println("Executando controller/cadastrarProduto/");
@@ -84,15 +99,15 @@ public class ProdutoController {
 		System.out.println("Executando controller/buscar-id");
 		Produto produtoBuscado = produtoService.buscarIdProduto(idProduto);
 		if (produtoBuscado.idProduto == null) {
-			return new ResponseEntity<Produto>(produtoBuscado, HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>(produtoBuscado, HttpStatus.NO_CONTENT);
 		} else
-			return new ResponseEntity<Produto>(produtoBuscado, HttpStatus.OK);
+			return new ResponseEntity<>(produtoBuscado, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/listarProdutos/", method = RequestMethod.GET)
 	public ResponseEntity<Collection<Produto>> listarProdutos() throws Exception {
 		System.out.println("Processando listarProduto");
-		return new ResponseEntity<Collection<Produto>>(produtoService.listarTodosProdutos(), HttpStatus.OK);
+		return new ResponseEntity<>(produtoService.listarTodosProdutos(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/comprarProduto/{id}", method = RequestMethod.GET)
@@ -100,25 +115,25 @@ public class ProdutoController {
 			@RequestParam("quantidade") Integer quantidade, @RequestParam("comprador") String comprador) throws Exception {
 		System.out.println("Processando listarProduto");
 		Compra produtoComprado =  produtoService.realizarCompra(idProduto, quantidade, comprador);
-		if (produtoComprado.idCompra == null) {			
-			return new ResponseEntity<Compra>(produtoComprado, HttpStatus.BAD_REQUEST);
+		if (produtoComprado.idCompra == null) {
+			return new ResponseEntity<>(produtoComprado, HttpStatus.BAD_REQUEST);
 		} else
 			estoqueDados.atualizaEstoque(idProduto, quantidade);
-			return new ResponseEntity<Compra>(produtoComprado, HttpStatus.OK);
+			return new ResponseEntity<>(produtoComprado, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/listarCompras/", method = RequestMethod.GET)
 	public ResponseEntity<Collection<Compra>> listarCompras() throws Exception {
 		System.out.println("Processando listarCompras");
-		return new ResponseEntity<Collection<Compra>>(produtoService.listarTodasCompras(), HttpStatus.OK);
+		return new ResponseEntity<>(produtoService.listarTodasCompras(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/executaLoteComprasAcima10/", method = RequestMethod.GET)
-	public ResponseEntity<Collection<Compra>> executaLoteComprasAcima10() throws Exception {
-		System.out.println("Processando listarProduto");
-		// TODO: Funcionalidade: ao ser chamado, deve-se executar uma rotina em lote,
-		// escrevendo em arquivo
-		// todas as compras feitas, com valor do produto acima de R$10,00.
+	public ResponseEntity<Collection<Compra>> executaLoteComprasAcima10() throws JobExecutionAlreadyRunningException, JobRestartException,
+	JobInstanceAlreadyCompleteException, JobParametersInvalidException {
+		JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
+				.toJobParameters();
+		jobLauncher.run(processJob, jobParameters);
 		return null;
 	}
 
@@ -147,12 +162,12 @@ public class ProdutoController {
 		produto.quantidadeProduto = quantidadeProduto;
 		int retorno = produtoService.alterarProduto(produto, id);
 		if (retorno == 400) {
-			return new ResponseEntity<Produto>(produto, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(produto, HttpStatus.BAD_REQUEST);
 		}
 		if (retorno == 404) {
-			return new ResponseEntity<Produto>(produto, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(produto, HttpStatus.NOT_FOUND);
 		} else
-			return new ResponseEntity<Produto>(produto, HttpStatus.OK);
+			return new ResponseEntity<>(produto, HttpStatus.OK);
 	}
 
 }

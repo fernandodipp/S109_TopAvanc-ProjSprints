@@ -1,0 +1,99 @@
+
+Compra ID 9
+Produto comprado 
+Id 2
+Marca: Marca Grife
+Modelo Caro
+Unidades compradas 1
+Valor por Unidade R$11.0
+Comprador Fernando
+Data e Hora 08/06/2022
+
+
+Compra ID 10
+Produto comprado 
+Id 2
+Marca: Marca Grife
+Modelo Caro
+Unidades compradas 1
+Valor por Unidade R$11.0
+Comprador Fernando
+Data e Hora 08/06/2022
+
+
+Compra ID 11
+Produto comprado 
+Id 2
+Marca: Marca Grife
+Modelo Caro
+Unidades compradas 1
+Valor por Unidade R$11.0
+Comprador Fernando
+Data e Hora 08/06/2022
+
+
+Compra ID 12
+Produto comprado 
+Id 2
+Marca: Marca Grife
+Modelo Caro
+Unidades compradas 1
+Valor por Unidade R$11.0
+Comprador Fernando
+Data e Hora 08/06/2022
+
+
+Compra ID 13
+Produto comprado 
+Id 2
+Marca: Marca Grife
+Modelo Caro
+Unidades compradas 1
+Valor por Unidade R$11.0
+Comprador Fernando
+Data e Hora 08/06/2022
+
+
+Compra ID 14
+Produto comprado 
+Id 2
+Marca: Marca Grife
+Modelo Caro
+Unidades compradas 1
+Valor por Unidade R$11.0
+Comprador Fernando
+Data e Hora 08/06/2022
+
+
+Compra ID 17
+Produto comprado 
+Id 2
+Marca: Marca Grife
+Modelo Caro
+Unidades compradas 1
+Valor por Unidade R$11.0
+Comprador Fernando
+Data e Hora 08/06/2022
+
+
+Compra ID 18
+Produto comprado 
+Id 2
+Marca: Marca Grife
+Modelo Caro
+Unidades compradas 1
+Valor por Unidade R$11.0
+Comprador Fernando
+Data e Hora 08/06/2022
+
+
+Compra ID 19
+Produto comprado 
+Id 2
+Marca: Marca Grife
+Modelo Caro
+Unidades compradas 1
+Valor por Unidade R$11.0
+Comprador Fernando
+Data e Hora 08/06/2022
+

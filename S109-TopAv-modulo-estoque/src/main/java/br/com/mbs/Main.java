@@ -1,3 +1,4 @@
+/*Módulo Estoque*/
 package br.com.mbs;
 
 

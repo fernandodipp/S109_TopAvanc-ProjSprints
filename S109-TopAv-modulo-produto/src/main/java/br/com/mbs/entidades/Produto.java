@@ -4,14 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Produto {
-	
+
 	public Integer idProduto;
 	public String marcaProduto = null;
 	public String modeloProduto = null;
 	public Float precoProduto = null;
-	public Integer quantidadeProduto = null;	
+	public Integer quantidadeProduto = null;
 	public String dataCadastro = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-	
+
 	public String getMarcaProduto() {
 		return marcaProduto;
 	}
@@ -54,8 +54,8 @@ public class Produto {
 
 	@Override
 	public String toString() {
-		
-	return "\nId " + idProduto + 
+
+	return "\nId " + idProduto +
 			"\nMarca: " + marcaProduto +
 			"\nModelo " + modeloProduto;
 	}
